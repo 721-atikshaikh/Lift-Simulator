@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lift Simulator</title>
+    <link rel="stylesheet" href="./css/main.css" />
+    <link rel="icon" type="image/x-icon" href="./lift.ico" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+  </head>
+  <body>
+    <header>
+      <h1 id="title">Lift Simulator</h1>
+      <div class="buttons-container">
+      <button class="add-floor-button hover-style" data-lift-num="4">
+        Add Floor
+      </button>
+      <button class="add-lift-button hover-style" data-lift-num="4">
+        Add Lift
+      </button>
+    </div>
+      </div>
+    </header>
+    <main>
+      <div class="shell">
+        <div id="floor-container" class="floor-container">
+          <div class="floor">
+            <div class="lift-buttons">
+              <button class="call-lift-btn open-lift-btn" data-lift-num="0">
+                <i
+                  class="fa fa-angle-double-up"
+                  style="font-size: 35px; color: rgb(255, 255, 255)"
+                ></i>
+              </button>
+              <button class="call-lift-btn close-lift-btn" data-lift-num="0">
+                <i
+                  class="fa fa-angle-double-down"
+                  style="font-size: 35px; color: rgb(255, 255, 255)"
+                ></i>
+              </button>
+            </div>
+            <div class="lift-container">
+              <div class="left-door"></div>
+              <div class="right-door"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="./js/main.js"></script>
+  </body>
+</html>
