@@ -61,39 +61,6 @@ function isLiftOnFloor(floor) {
   return false;
 }
 
-// function getClosestEmptyLift(destinationFloor, direction) {
-//   const currentNumberOfLifts = getLifts();
-
-//   const emptyLifts = currentNumberOfLifts.reduce(
-//     (result, value, index) =>
-//       result.concat(
-//         value.busy === false &&
-//           (direction === "down"
-//             ? isLiftOnFloor(destinationFloor) === false
-//             : true)
-//           ? {
-//               index,
-//               currentFloor: value.currentFloor,
-//               distance: Math.abs(destinationFloor - value.currentFloor),
-//             }
-//           : []
-//       ),
-//     []
-//   );
-
-//   if (emptyLifts.length <= 0) {
-//     return { lift: {}, index: -1 };
-//   }
-
-//   const closestLift = emptyLifts.reduce((result, value, index) =>
-//     value.distance < result.distance ? value : result
-//   );
-
-//   const index = closestLift.index;
-
-//   return { lift: lifts[index], index };
-// }
-
 function getClosestEmptyLift(destinationFloor, direction) {
   const currentNumberOfLifts = getLifts();
 
@@ -101,7 +68,7 @@ function getClosestEmptyLift(destinationFloor, direction) {
     (result, value, index) =>
       result.concat(
         value.busy === false &&
-          value.currentFloor !== destinationFloor && // Add this condition
+          value.currentFloor !== destinationFloor &&
           (direction === "down"
             ? isLiftOnFloor(destinationFloor) === false
             : true)
@@ -140,8 +107,21 @@ const callLift = (direction) => {
     }
   } else {
     requests.dequeue();
+    moveLiftAfterAnimation(destinationFloor);
   }
 };
+
+function moveLiftAfterAnimation(destinationFloor) {
+  for (let i = 0; i < lifts.length; i++) {
+    if (lifts[i].currentFloor == destinationFloor) {
+      // Wait for the animation to finish before dispatching the liftIdle event
+      setTimeout(() => {
+        dispatchliftIdle();
+      }, 3000 + 2500); // 3000 ms for opening animation and 2500 ms for closing animation
+      break;
+    }
+  }
+}
 
 const openLift = (index) => {
   buttons.disabled = true;
@@ -185,9 +165,27 @@ const moveLift = (lift, destFloor, index) => {
   lifts[index].currentFloor = destFloor;
 };
 
+function openCloseLiftIfOnSameFloor(floor) {
+  for (let i = 0; i < lifts.length; i++) {
+    if (lifts[i].currentFloor == floor && !lifts[i].busy) {
+      openCloseLift(i);
+      return true;
+    }
+  }
+  return false;
+}
+
 function addRequest(destFloor) {
-  requests.enqueue(destFloor);
-  dispatchRequestAdded();
+  const isPlayingAnimation = openCloseLiftIfOnSameFloor(destFloor);
+  if (!isPlayingAnimation) {
+    requests.enqueue(destFloor);
+    dispatchRequestAdded();
+  } else {
+    // Wait for the animation to finish before dispatching the liftIdle event
+    setTimeout(() => {
+      dispatchliftIdle();
+    }, 3000 + 2500); // 3000 ms for opening animation and 2500 ms for closing animation
+  }
 }
 
 const requestAddedEvent = new Event("requestAdded");
