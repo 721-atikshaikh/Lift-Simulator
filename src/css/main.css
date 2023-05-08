@@ -7,6 +7,7 @@
 html,
 body {
   overflow: hidden;
+  height: 100%;
 }
 
 body {
@@ -92,6 +93,9 @@ main {
   padding-left: 15px;
   padding-right: 15px;
   position: relative;
+  white-space: nowrap;
+  display: flex;
+  flex-wrap: nowrap;
 }
 
 .floor-container::-webkit-scrollbar {
@@ -111,12 +115,11 @@ main {
 .floor {
   border-bottom: 1px solid #6ffdce;
   height: 100px;
+  width: 100%;
   display: flex;
 }
 
 .lift-container {
-  position: absolute;
-  left: 30px;
   height: 100px;
   width: 70px;
   background-color: black;
@@ -206,4 +209,80 @@ main {
 button:disabled {
   opacity: 0.5;
   cursor: no-drop;
+}
+
+.lift-buttons button i {
+  font-size: 20px;
+}
+
+@media screen and (max-width: 600px) {
+  .shell {
+    width: 90%;
+    height: 60%;
+  }
+
+  .floor-container {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
+  .lift-container {
+    height: 60px;
+    width: 40px;
+    background-color: black;
+    position: relative !important;
+    left: 10px !important;
+    margin-right: 25px;
+    z-index: 3;
+    overflow: hidden;
+    min-width: 40px;
+  }
+
+  .floor {
+    height: 60px;
+    display: inline-flex;
+    flex-shrink: 0;
+  }
+
+  .lift-buttons {
+    width: 60px;
+    margin-right: 25px;
+  }
+
+  .lift-buttons button i {
+    font-size: 20px;
+  }
+
+  h1#title {
+    font-size: 1.25rem;
+  }
+
+  .buttons-container {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .add-floor-button,
+  .add-lift-button,
+  .remove-floor-button,
+  .remove-lift-button {
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+
+  .lift-buttons {
+    /* flex-direction: column; */
+    width: auto;
+    height: auto;
+    gap: 0.5rem;
+  }
+
+  .lift-buttons button {
+    padding: 5px;
+    margin: auto;
+  }
+
+  .lift-buttons button i {
+    font-size: 15px;
+  }
 }

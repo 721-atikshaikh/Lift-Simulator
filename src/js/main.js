@@ -277,11 +277,11 @@ function getFloorEl() {
   <div class="lift-buttons">
     <button class="call-lift-btn open-lift-btn" data-lift-num="${newLiftNum}"><i
     class="fa fa-angle-double-up"
-    style="font-size: 35px; color: rgb(255, 255, 255)"
+    style="color: rgb(255, 255, 255)"
   ></i></button>
     <button class="call-lift-btn close-lift-btn" data-lift-num="${newLiftNum}"><i
     class="fa fa-angle-double-down"
-    style="font-size: 35px; color: rgb(255, 255, 255)"
+    style="color: rgb(255, 255, 255)"
   ></i></button>
   </div>
   `;
