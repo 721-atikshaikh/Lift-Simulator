@@ -1,6 +1,8 @@
 let buttons = document.querySelectorAll(".call-lift-btn");
 let floorButton = document.querySelector(".add-floor-button");
 let liftButton = document.querySelector(".add-lift-button");
+let removeFloorButton = document.querySelector(".remove-floor-button");
+let removeLiftButton = document.querySelector(".remove-lift-button");
 let liftEls = document.querySelectorAll(".lift-container");
 let leftDoors = document.querySelectorAll(".left-door");
 let rightDoors = document.querySelectorAll(".right-door");
@@ -45,6 +47,7 @@ const lifts = Array.from(
     htmlElement: item,
     busy: false,
     currentFloor: 0,
+    liftOpening: false,
   })
 );
 
@@ -101,7 +104,7 @@ const callLift = (direction) => {
   if (!isLiftOnFloor(destinationFloor)) {
     const { lift, index } = getClosestEmptyLift(destinationFloor, direction);
 
-    if (index >= 0) {
+    if (index >= 0 && !lifts[index].liftOpening) {
       lifts[index].busy = true;
       moveLift(lift.htmlElement, requests.dequeue(), index);
     }
@@ -130,6 +133,8 @@ const openLift = (index) => {
 
   rightDoors[index].classList.remove("right-door-close");
   leftDoors[index].classList.remove("left-door-close");
+
+  lifts[index].liftOpening = true;
 };
 
 const closeLift = (index) => {
@@ -139,6 +144,8 @@ const closeLift = (index) => {
   rightDoors[index].classList.remove("right-door-open");
   leftDoors[index].classList.remove("left-door-open");
   buttons.disabled = false;
+
+  lifts[index].liftOpening = false;
 
   setTimeout(() => {
     lifts[index].busy = false;
@@ -221,6 +228,14 @@ function addLift() {
   rightDoors = document.querySelectorAll(".right-door");
 }
 
+function removeLift() {
+  if (lifts.length > 1) {
+    const lastLift = lifts.pop();
+    lastLift.htmlElement.remove();
+    liftEls = document.querySelectorAll(".lift-container");
+  }
+}
+
 function getLiftEl() {
   const liftDistance = (lifts.length + 1) * 120;
 
@@ -244,6 +259,13 @@ function addFloor() {
   floors = document.querySelectorAll(".floor");
   buttons = document.querySelectorAll(".call-lift-btn");
   addCallLiftListeners([buttons[0], buttons[1]]);
+}
+
+function removeFloor() {
+  if (floors.length > 1) {
+    floorsContainer.removeChild(floors[0]);
+    floors = document.querySelectorAll(".floor");
+  }
 }
 
 function getFloorEl() {
@@ -280,6 +302,8 @@ function main() {
   addCallLiftListeners(buttons);
   floorButton.addEventListener("click", addFloor);
   liftButton.addEventListener("click", addLift);
+  removeFloorButton.addEventListener("click", removeFloor);
+  removeLiftButton.addEventListener("click", removeLift);
 }
 
 main();
