@@ -93,9 +93,6 @@ main {
   padding-left: 15px;
   padding-right: 15px;
   position: relative;
-  white-space: nowrap;
-  display: flex;
-  flex-wrap: nowrap;
 }
 
 .floor-container::-webkit-scrollbar {
@@ -115,7 +112,7 @@ main {
 .floor {
   border-bottom: 1px solid #6ffdce;
   height: 100px;
-  width: 100%;
+  min-width: 100%;
   display: flex;
 }
 
@@ -218,7 +215,8 @@ button:disabled {
 @media screen and (max-width: 600px) {
   .shell {
     width: 90%;
-    height: 60%;
+    height: 80%;
+    margin-bottom: 90px;
   }
 
   .floor-container {
@@ -240,6 +238,7 @@ button:disabled {
 
   .floor {
     height: 60px;
+    width: 100%;
     display: inline-flex;
     flex-shrink: 0;
   }
@@ -247,6 +246,7 @@ button:disabled {
   .lift-buttons {
     width: 60px;
     margin-right: 25px;
+    margin-left: 10px;
   }
 
   .lift-buttons button i {
@@ -271,7 +271,6 @@ button:disabled {
   }
 
   .lift-buttons {
-    /* flex-direction: column; */
     width: auto;
     height: auto;
     gap: 0.5rem;
